@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PurelyPixel — Web Design Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root {
+  --bg: #0A0A0F;
+  --surface: #111118;
+  --surface2: #18181F;
+  --border: rgba(255,255,255,0.07);
+  --text: #F0EFF8;
+  --muted: #7A798A;
+  --accent1: #6EE7B7;
+  --accent2: #818CF8;
+  --accent3: #FB923C;
+  --accent4: #F472B6;
+  --syne: 'Syne', sans-serif;
+  --outfit: 'Outfit', sans-serif;
+}
+
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--outfit);overflow-x:hidden;}
+
+/* NOISE OVERLAY */
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:0.4;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 4rem;
+  border-bottom:1px solid var(--border);
+  background:rgba(10,10,15,0.85);
+  backdrop-filter:blur(20px);
+}
+.logo{font-family:var(--syne);font-size:1.3rem;font-weight:800;letter-spacing:-0.01em;}
+.logo span{
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{font-size:0.82rem;color:var(--muted);text-decoration:none;letter-spacing:0.05em;transition:color 0.2s;}
+.nav-links a:hover{color:var(--text);}
+.nav-cta{
+  padding:0.55rem 1.3rem;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  color:#0A0A0F;font-family:var(--outfit);font-size:0.8rem;font-weight:600;
+  border:none;cursor:pointer;border-radius:6px;letter-spacing:0.03em;
+  transition:opacity 0.2s;
+}
+.nav-cta:hover{opacity:0.85;}
+
+/* HERO */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:8rem 4rem 5rem;position:relative;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;top:-10rem;right:-5rem;
+  width:50rem;height:50rem;border-radius:50%;
+  background:radial-gradient(circle,rgba(110,231,183,0.06) 0%,rgba(129,140,248,0.04) 40%,transparent 70%);
+  pointer-events:none;
+}
+.hero-glow2{
+  position:absolute;bottom:-15rem;left:-10rem;
+  width:40rem;height:40rem;border-radius:50%;
+  background:radial-gradient(circle,rgba(251,146,60,0.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.35rem 0.9rem;border:1px solid rgba(110,231,183,0.3);border-radius:99px;
+  font-size:0.72rem;color:var(--accent1);letter-spacing:0.1em;text-transform:uppercase;
+  margin-bottom:2rem;width:fit-content;
+}
+.hero-tag::before{content:'●';font-size:0.5rem;animation:blink 1.5s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.hero-title{
+  font-family:var(--syne);font-size:clamp(3rem,8vw,6.5rem);
+  font-weight:800;line-height:1.0;letter-spacing:-0.03em;
+  margin-bottom:1.5rem;
+}
+.hero-title .line2{
+  background:linear-gradient(90deg,var(--accent2) 0%,var(--accent4) 50%,var(--accent3) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  font-size:1.05rem;color:var(--muted);line-height:1.75;
+  max-width:500px;margin-bottom:3rem;font-weight:300;
+}
+.hero-sub strong{color:var(--text);font-weight:500;}
+.hero-actions{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
+.btn-grad{
+  padding:0.9rem 2rem;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  color:#0A0A0F;font-size:0.85rem;font-weight:600;
+  border:none;cursor:pointer;border-radius:8px;font-family:var(--outfit);
+  transition:transform 0.2s,opacity 0.2s;
+}
+.btn-grad:hover{transform:translateY(-2px);opacity:0.9;}
+.btn-outline{
+  padding:0.9rem 1.8rem;background:transparent;
+  border:1px solid var(--border);color:var(--muted);
+  font-size:0.85rem;cursor:pointer;border-radius:8px;font-family:var(--outfit);
+  transition:all 0.2s;
+}
+.btn-outline:hover{border-color:var(--accent2);color:var(--text);}
+
+.hero-chips{display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:3rem;}
+.chip{
+  padding:0.4rem 0.9rem;border:1px solid var(--border);border-radius:99px;
+  font-size:0.72rem;color:var(--muted);letter-spacing:0.05em;
+}
+
+/* MARQUEE */
+.marquee-wrap{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  background:var(--surface);padding:1rem 0;overflow:hidden;position:relative;
+}
+.marquee{display:flex;gap:3rem;animation:marquee 20s linear infinite;white-space:nowrap;width:max-content;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%)}}
+.marquee-item{
+  font-family:var(--syne);font-size:0.75rem;font-weight:600;
+  letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);
+  display:flex;align-items:center;gap:1rem;
+}
+.marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--accent1);}
+
+/* WORK */
+.section{padding:6rem 4rem;}
+.section-label{
+  display:flex;align-items:center;gap:0.75rem;
+  font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent2);
+  margin-bottom:1rem;
+}
+.section-label::before{content:'';width:2rem;height:1px;background:var(--accent2);}
+.section-title{
+  font-family:var(--syne);font-size:clamp(2rem,4vw,3rem);font-weight:700;
+  letter-spacing:-0.02em;line-height:1.1;margin-bottom:0.75rem;
+}
+.section-sub{font-size:0.9rem;color:var(--muted);line-height:1.7;max-width:450px;margin-bottom:3.5rem;}
+
+/* PROJECT CARDS */
+.projects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;}
+.project-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:16px;
+  overflow:hidden;cursor:pointer;transition:transform 0.3s,border-color 0.3s;
+  position:relative;
+}
+.project-card:hover{transform:translateY(-6px);}
+.project-card:hover .pc-img{transform:scale(1.04);}
+.project-card.big{grid-column:span 2;}
+
+.pc-img-wrap{overflow:hidden;position:relative;}
+.pc-img{
+  width:100%;display:block;transition:transform 0.5s ease;
+  aspect-ratio:16/9;object-fit:cover;
+}
+.project-card.big .pc-img{aspect-ratio:21/9;}
+
+.pc-tag{
+  position:absolute;top:1rem;left:1rem;
+  padding:0.3rem 0.75rem;border-radius:99px;
+  font-size:0.65rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;
+}
+.tag-green{background:rgba(110,231,183,0.15);color:var(--accent1);border:1px solid rgba(110,231,183,0.3);}
+.tag-purple{background:rgba(129,140,248,0.15);color:var(--accent2);border:1px solid rgba(129,140,248,0.3);}
+.tag-orange{background:rgba(251,146,60,0.15);color:var(--accent3);border:1px solid rgba(251,146,60,0.3);}
+.tag-pink{background:rgba(244,114,182,0.15);color:var(--accent4);border:1px solid rgba(244,114,182,0.3);}
+
+.pc-body{padding:1.5rem;}
+.pc-title{font-family:var(--syne);font-size:1.2rem;font-weight:700;margin-bottom:0.4rem;}
+.project-card.big .pc-title{font-size:1.5rem;}
+.pc-desc{font-size:0.82rem;color:var(--muted);line-height:1.6;margin-bottom:1.2rem;}
+.pc-stack{display:flex;gap:0.5rem;flex-wrap:wrap;}
+.pc-pill{
+  padding:0.25rem 0.6rem;background:var(--surface2);border:1px solid var(--border);
+  border-radius:4px;font-size:0.65rem;color:var(--muted);letter-spacing:0.05em;
+}
+.pc-arrow{
+  position:absolute;bottom:1.5rem;right:1.5rem;
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;
+  color:var(--muted);transition:all 0.2s;
+}
+.project-card:hover .pc-arrow{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+
+/* SERVICES */
+.services-section{background:var(--surface);padding:6rem 4rem;}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem;}
+.service-card{
+  padding:2rem;border:1px solid var(--border);border-radius:12px;
+  background:var(--bg);transition:border-color 0.3s;position:relative;overflow:hidden;
+}
+.service-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  opacity:0;transition:opacity 0.3s;
+}
+.s1::before{background:linear-gradient(90deg,var(--accent1),var(--accent2));}
+.s2::before{background:linear-gradient(90deg,var(--accent2),var(--accent4));}
+.s3::before{background:linear-gradient(90deg,var(--accent3),var(--accent4));}
+.s4::before{background:linear-gradient(90deg,var(--accent1),var(--accent3));}
+.s5::before{background:linear-gradient(90deg,var(--accent4),var(--accent2));}
+.s6::before{background:linear-gradient(90deg,var(--accent3),var(--accent1));}
+.service-card:hover{border-color:transparent;}
+.service-card:hover::before{opacity:1;}
+.service-icon{font-size:1.8rem;margin-bottom:1.2rem;}
+.service-title{font-family:var(--syne);font-size:1rem;font-weight:700;margin-bottom:0.6rem;}
+.service-desc{font-size:0.8rem;color:var(--muted);line-height:1.7;}
+.service-price{
+  margin-top:1.2rem;font-size:0.75rem;font-weight:600;
+  color:var(--accent1);letter-spacing:0.05em;
+}
+
+/* PROCESS */
+.process-section{padding:6rem 4rem;}
+.process-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:3.5rem;position:relative;}
+.process-steps::before{
+  content:'';position:absolute;top:2rem;left:15%;right:15%;height:1px;
+  background:linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent4),var(--accent3));
+  opacity:0.3;
+}
+.step{text-align:center;padding:0 1rem;}
+.step-num{
+  width:4rem;height:4rem;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--syne);font-size:1rem;font-weight:800;
+  margin:0 auto 1.5rem;border:1px solid var(--border);
+  background:var(--surface);position:relative;z-index:1;
+}
+.step-num.c1{color:var(--accent1);border-color:rgba(110,231,183,0.3);}
+.step-num.c2{color:var(--accent2);border-color:rgba(129,140,248,0.3);}
+.step-num.c3{color:var(--accent4);border-color:rgba(244,114,182,0.3);}
+.step-num.c4{color:var(--accent3);border-color:rgba(251,146,60,0.3);}
+.step-title{font-family:var(--syne);font-size:0.9rem;font-weight:700;margin-bottom:0.5rem;}
+.step-desc{font-size:0.75rem;color:var(--muted);line-height:1.6;}
+
+/* STATS */
+.stats-section{
+  margin:0 4rem;border:1px solid var(--border);border-radius:16px;
+  background:var(--surface);padding:3.5rem 4rem;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
+  position:relative;overflow:hidden;
+}
+.stats-section::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(110,231,183,0.03) 0%,rgba(129,140,248,0.03) 50%,rgba(251,146,60,0.02) 100%);
+}
+.stat-item{position:relative;z-index:1;text-align:center;}
+.stat-num{
+  font-family:var(--syne);font-size:3rem;font-weight:800;line-height:1;
+  background:linear-gradient(135deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:0.5rem;
+}
+.stat-label{font-size:0.8rem;color:var(--muted);}
+
+/* TESTIMONIALS */
+.testimonials-section{padding:6rem 4rem;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem;}
+.testi-card{
+  padding:1.8rem;background:var(--surface);border:1px solid var(--border);
+  border-radius:12px;transition:border-color 0.3s;
+}
+.testi-card:hover{border-color:rgba(129,140,248,0.3);}
+.testi-stars{color:var(--accent3);font-size:0.8rem;margin-bottom:1rem;letter-spacing:0.2em;}
+.testi-text{font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.5rem;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:0.75rem;}
+.testi-avatar{
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--syne);font-size:0.8rem;font-weight:700;color:#0A0A0F;
+}
+.a1{background:linear-gradient(135deg,var(--accent1),var(--accent2));}
+.a2{background:linear-gradient(135deg,var(--accent2),var(--accent4));}
+.a3{background:linear-gradient(135deg,var(--accent3),var(--accent4));}
+.testi-name{font-size:0.82rem;font-weight:600;}
+.testi-biz{font-size:0.72rem;color:var(--muted);}
+
+/* CTA */
+.cta-section{
+  margin:0 4rem 6rem;padding:5rem;
+  border-radius:20px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(110,231,183,0.08) 0%,rgba(129,140,248,0.08) 50%,rgba(251,146,60,0.06) 100%);
+  border:1px solid rgba(129,140,248,0.2);
+  text-align:center;
+}
+.cta-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:30rem;height:30rem;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(129,140,248,0.1) 0%,transparent 70%);
+}
+.cta-title{
+  font-family:var(--syne);font-size:clamp(2rem,4vw,3.5rem);font-weight:800;
+  letter-spacing:-0.02em;line-height:1.1;margin-bottom:1rem;position:relative;z-index:1;
+}
+.cta-title span{
+  background:linear-gradient(90deg,var(--accent1),var(--accent2),var(--accent4));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.cta-sub{font-size:0.95rem;color:var(--muted);max-width:420px;margin:0 auto 2.5rem;line-height:1.7;position:relative;z-index:1;}
+.cta-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1;}
+.wa-btn{
+  padding:0.9rem 1.8rem;background:#25D366;color:#fff;
+  border:none;border-radius:8px;font-size:0.85rem;font-weight:600;
+  cursor:pointer;font-family:var(--outfit);display:flex;align-items:center;gap:0.5rem;
+  transition:opacity 0.2s;
+}
+.wa-btn:hover{opacity:0.9;}
+
+/* FOOTER */
+footer{
+  background:var(--surface);border-top:1px solid var(--border);
+  padding:2.5rem 4rem;display:flex;justify-content:space-between;align-items:center;
+}
+.footer-logo{font-family:var(--syne);font-size:1.1rem;font-weight:800;}
+.footer-logo span{
+  background:linear-gradient(90deg,var(--accent1),var(--accent2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.footer-copy{font-size:0.75rem;color:var(--muted);}
+.footer-links{display:flex;gap:1.5rem;list-style:none;}
+.footer-links a{font-size:0.75rem;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.footer-links a:hover{color:var(--text);}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.hero-content>*{animation:fadeUp 0.7s ease both;}
+.hero-tag{animation-delay:0.1s;}
+.hero-title{animation-delay:0.2s;}
+.hero-sub{animation-delay:0.3s;}
+.hero-actions{animation-delay:0.4s;}
+.hero-chips{animation-delay:0.5s;}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  .hero,.section,.services-section,.process-section,.testimonials-section{padding:5rem 1.5rem;}
+  .hero{padding-top:7rem;}
+  .stats-section,.cta-section{margin:0 1.5rem;}
+  .cta-section{padding:3rem 1.5rem;margin-bottom:4rem;}
+  .projects-grid,.services-grid,.testi-grid{grid-template-columns:1fr;}
+  .project-card.big{grid-column:span 1;}
+  .process-steps{grid-template-columns:repeat(2,1fr);gap:2rem;}
+  .stats-section{grid-template-columns:repeat(2,1fr);}
+  footer{flex-direction:column;gap:1rem;text-align:center;padding:2rem 1.5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Purely<span>Pixel</span></div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Let's Talk →</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for new projects</div>
+    <h1 class="hero-title">
+      We Build Websites<br>
+      <span class="line2">That Get Clients.</span>
+    </h1>
+    <p class="hero-sub">
+      <strong>PurelyPixel</strong> is a web design studio for Indian businesses ready to grow online. 
+      Fast, modern, mobile-first — delivered in 7 days.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-grad" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})">See Our Work</button>
+      <button class="btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get a Free Quote</button>
+    </div>
+    <div class="hero-chips">
+      <span class="chip">⚡ 7-Day Delivery</span>
+      <span class="chip">📱 Mobile First</span>
+      <span class="chip">🇮🇳 India Based</span>
+      <span class="chip">💬 WhatsApp Support</span>
+      <span class="chip">✅ RERA / GST Ready</span>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span class="marquee-item">Real Estate <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Restaurants <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Clinics & Doctors <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Salons & Spas <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Gyms & Fitness <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Local Shops <span class="marquee-dot"></span></span>
+    <span class="marquee-item">CA & Legal Firms <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Coaching Centers <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Real Estate <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Restaurants <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Clinics & Doctors <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Salons & Spas <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Gyms & Fitness <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Local Shops <span class="marquee-dot"></span></span>
+    <span class="marquee-item">CA & Legal Firms <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Coaching Centers <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- WORK -->
+<section class="section" id="work">
+  <div class="section-label">Our Work</div>
+  <h2 class="section-title">Projects That Perform</h2>
+  <p class="section-sub">Real websites, real results. Every project built from scratch for maximum impact.</p>
+
+  <div class="projects-grid">
+
+    <div class="project-card big" onclick="window.open('https://super-queijadas-0a2f0d.netlify.app/','_blank')" style="cursor:pointer;">
+      <div class="pc-img-wrap">
+        <img class="pc-img" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&q=80" alt="Sparsh Physio">
+        <span class="pc-tag tag-green">Physiotherapy Clinic</span>
+      </div>
+      <div class="pc-body" style="padding-right:4rem;">
+        <div class="pc-title">Sparsh Physiotherapy Center — Gwalior</div>
+        <div class="pc-desc">Full-featured clinic website with animated counters, service listings, appointment booking form, Google Maps, patient testimonials carousel, and WhatsApp CTA. 4.8★ rated clinic in Gwalior.</div>
+        <div class="pc-stack">
+          <span class="pc-pill">HTML/CSS</span>
+          <span class="pc-pill">JavaScript</span>
+          <span class="pc-pill">Booking Form</span>
+          <span class="pc-pill">Google Maps</span>
+          <span class="pc-pill">Netlify</span>
+        </div>
+      </div>
+      <div class="pc-arrow">↗</div>
+    </div>
+
+    <div class="project-card" onclick="window.open('https://numra-astral.com/','_blank')" style="cursor:pointer;">
+      <div class="pc-img-wrap">
+        <img class="pc-img" src="https://images.unsplash.com/photo-1518133910546-b6c2fb7d79e3?w=800&q=80" alt="Numra Astral">
+        <span class="pc-tag tag-purple">Numerology</span>
+      </div>
+      <div class="pc-body" style="padding-right:3.5rem;">
+        <div class="pc-title">NUMRA-Astral — Cosmic Blueprint</div>
+        <div class="pc-desc">Dark mystical website for an astro-numerologist with animated starfield, free numerology calculator, service cards, testimonials carousel, and WhatsApp booking.</div>
+        <div class="pc-stack">
+          <span class="pc-pill">HTML/CSS</span>
+          <span class="pc-pill">JS Calculator</span>
+          <span class="pc-pill">Custom Domain</span>
+          <span class="pc-pill">WhatsApp CTA</span>
+        </div>
+      </div>
+      <div class="pc-arrow">↗</div>
+    </div>
+
+    <div class="project-card" onclick="window.open('https://chestclinic.netlify.app/','_blank')" style="cursor:pointer;">
+      <div class="pc-img-wrap">
+        <img class="pc-img" src="https://images.unsplash.com/photo-1666214280557-f1b5022eb634?w=800&q=80" alt="Dr Ujjwal Chest Clinic">
+        <span class="pc-tag tag-green">Healthcare</span>
+      </div>
+      <div class="pc-body" style="padding-right:3.5rem;">
+        <div class="pc-title">Dr. Ujjwal Sharma — Advance Chest Clinic</div>
+        <div class="pc-desc">Professional pulmonologist profile site with OPD timings, appointment request form, patient reviews (672+ ratings), FAQ accordion, and Google Maps location.</div>
+        <div class="pc-stack">
+          <span class="pc-pill">HTML/CSS</span>
+          <span class="pc-pill">FAQ Accordion</span>
+          <span class="pc-pill">Appointment Form</span>
+          <span class="pc-pill">Netlify</span>
+        </div>
+      </div>
+      <div class="pc-arrow">↗</div>
+    </div>
+
+    <div class="project-card" onclick="window.open('https://qrkodegenerators.netlify.app/','_blank')" style="cursor:pointer;">
+      <div class="pc-img-wrap">
+        <img class="pc-img" src="https://images.unsplash.com/photo-1595079676339-1534801ad6cf?w=800&q=80" alt="QR Crafty">
+        <span class="pc-tag tag-orange">Web Tool</span>
+      </div>
+      <div class="pc-body" style="padding-right:3.5rem;">
+        <div class="pc-title">QRcraft — Beautiful QR Code Generator</div>
+        <div class="pc-desc">Free web tool to generate QR codes for URLs, Wi-Fi, contacts and text. Custom colors, logo upload, size control, error correction levels, and PNG download — all in-browser.</div>
+        <div class="pc-stack">
+          <span class="pc-pill">HTML/CSS/JS</span>
+          <span class="pc-pill">QR Library</span>
+          <span class="pc-pill">Canvas API</span>
+          <span class="pc-pill">Netlify</span>
+        </div>
+      </div>
+      <div class="pc-arrow">↗</div>
+    </div>
+
+    <div class="project-card big" style="cursor:pointer;">
+      <div class="pc-img-wrap">
+        <img class="pc-img" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80" alt="LuxeHomes Real Estate Demo">
+        <span class="pc-tag tag-pink">Real Estate · Demo</span>
+      </div>
+      <div class="pc-body" style="padding-right:4rem;">
+        <div class="pc-title">LuxeHomes — Premium Real Estate Portal</div>
+        <div class="pc-desc">A luxury dark-themed real estate website with property listings, search filters, price/BHK specs, virtual tour section, testimonials and WhatsApp CTA. Designed for builders, brokers and agents.</div>
+        <div class="pc-stack">
+          <span class="pc-pill">HTML/CSS</span>
+          <span class="pc-pill">JavaScript</span>
+          <span class="pc-pill">Property Listings</span>
+          <span class="pc-pill">WhatsApp API</span>
+          <span class="pc-pill">Demo Project</span>
+        </div>
+      </div>
+      <div class="pc-arrow">↗</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stat-item">
+    <div class="stat-num">7</div>
+    <div class="stat-label">Days Average Delivery</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Client Satisfaction</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">₹0</div>
+    <div class="stat-label">Hidden Charges</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">Services & Pricing</h2>
+  <p class="section-sub">Transparent pricing. No surprises. Everything your business needs to look great online.</p>
+  <div class="services-grid">
+    <div class="service-card s1">
+      <div class="service-icon">🏠</div>
+      <div class="service-title">Real Estate Website</div>
+      <div class="service-desc">Property listings, search filters, virtual tour, WhatsApp CTA, Google Maps. Perfect for builders, brokers & agents.</div>
+      <div class="service-price">Starting ₹8,000</div>
+    </div>
+    <div class="service-card s2">
+      <div class="service-icon">🍽️</div>
+      <div class="service-title">Restaurant / Cafe</div>
+      <div class="service-desc">Menu showcase, online reservations, photo gallery, location integration, Swiggy/Zomato links.</div>
+      <div class="service-price">Starting ₹6,000</div>
+    </div>
+    <div class="service-card s3">
+      <div class="service-icon">💆</div>
+      <div class="service-title">Salon & Spa</div>
+      <div class="service-desc">Service menu, before/after gallery, WhatsApp booking, Instagram feed integration, offers section.</div>
+      <div class="service-price">Starting ₹5,000</div>
+    </div>
+    <div class="service-card s4">
+      <div class="service-icon">🏥</div>
+      <div class="service-title">Clinic / Doctor</div>
+      <div class="service-desc">Doctor profiles, appointment booking form, services list, patient testimonials, NABH-ready design.</div>
+      <div class="service-price">Starting ₹7,000</div>
+    </div>
+    <div class="service-card s5">
+      <div class="service-icon">🏋️</div>
+      <div class="service-title">Gym & Fitness</div>
+      <div class="service-desc">Membership plans, class schedule, trainer profiles, before/after transformations, free trial CTA.</div>
+      <div class="service-price">Starting ₹5,500</div>
+    </div>
+    <div class="service-card s6">
+      <div class="service-icon">🏪</div>
+      <div class="service-title">Local Business</div>
+      <div class="service-desc">Any local business — CA firms, coaching, boutiques, travel agents. Custom built for your needs.</div>
+      <div class="service-price">Starting ₹4,500</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section" id="process">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">From Idea to Live in 7 Days</h2>
+  <p class="section-sub">Simple, fast, zero stress. You share requirements, we handle everything else.</p>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-num c1">01</div>
+      <div class="step-title">You Share Details</div>
+      <div class="step-desc">Tell us your business, requirements & reference sites over WhatsApp. 15 min call max.</div>
+    </div>
+    <div class="step">
+      <div class="step-num c2">02</div>
+      <div class="step-title">We Design</div>
+      <div class="step-desc">We send you a design preview within 48 hours. 2 free revision rounds included.</div>
+    </div>
+    <div class="step">
+      <div class="step-num c3">03</div>
+      <div class="step-title">You Approve</div>
+      <div class="step-desc">Happy with the design? Give the green light. We move to final development immediately.</div>
+    </div>
+    <div class="step">
+      <div class="step-num c4">04</div>
+      <div class="step-title">We Go Live</div>
+      <div class="step-desc">Your website is live with domain & hosting. Full handover with WhatsApp support for 30 days.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-label">Client Love</div>
+  <h2 class="section-title">What Our Clients Say</h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Got my real estate website in just 5 days. The design is so professional that clients think I have a big agency. Highly recommend PurelyPixel!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar a1">RV</div>
+        <div>
+          <div class="testi-name">Rohit Verma</div>
+          <div class="testi-biz">Property Broker, Pune</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Our restaurant enquiries doubled after the new website. The WhatsApp booking feature is a game-changer. Best money we spent this year."</p>
+      <div class="testi-author">
+        <div class="testi-avatar a2">PK</div>
+        <div>
+          <div class="testi-name">Priya Kapoor</div>
+          <div class="testi-biz">Owner, Spice Route Restaurant</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Very professional team. They understood our clinic's needs perfectly and delivered a clean, trustworthy website. Patients love it too!"</p>
+      <div class="testi-author">
+        <div class="testi-avatar a3">DS</div>
+        <div>
+          <div class="testi-name">Dr. Deepak Shah</div>
+          <div class="testi-biz">Dermatologist, Mumbai</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <div class="cta-glow"></div>
+  <h2 class="cta-title">Ready to Build Your<br><span>Dream Website?</span></h2>
+  <p class="cta-sub">Free consultation. No commitment. Get a custom quote for your business in 24 hours.</p>
+  <div class="cta-actions">
+    <button class="wa-btn" onclick="window.open('https://wa.me/919876543210?text=Hi%20PurelyPixel!%20I%20want%20a%20website%20for%20my%20business.','_blank')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp Us Now
+    </button>
+    <button class="btn-grad" onclick="window.open('mailto:hello@purelypixel.in','_blank')">📧 Email Us</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Purely<span>Pixel</span></div>
+  <ul class="footer-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2025 PurelyPixel. Made in India 🇮🇳</p>
+</footer>
+
+</body>
+</html>
